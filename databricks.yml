@@ -1,0 +1,19 @@
+# This is a Databricks asset bundle definition for bcp_confluence_rag.
+# The Databricks extension requires databricks.yml configuration file.
+# See https://docs.databricks.com/dev-tools/bundles/index.html for documentation.
+
+bundle:
+  name: bcp_analisis_impacto
+
+targets:
+  dev:
+    mode: development
+    default: true
+    workspace:
+      host: https://adb-3666496523093700.0.azuredatabricks.net # https://e2-dogfood.staging.cloud.databricks.com
+
+  ## Optionally, there could be 'staging' or 'prod' targets here.
+  #
+  # prod:
+  #   workspace:
+  #     host: https://e2-dogfood.staging.cloud.databricks.com
