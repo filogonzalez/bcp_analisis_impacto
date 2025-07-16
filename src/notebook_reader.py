@@ -80,7 +80,8 @@ class NotebookPathReader:
             candidates = [c for c in df.columns if "path" in c.lower()]
             if not candidates:
                 raise ExcelFileError(
-                    "Could not infer path column. Please specify 'path_column'."
+                    "Could not infer path column. "
+                    "Please specify 'path_column'."
                 )
             path_column = candidates[0]
 
@@ -158,12 +159,14 @@ class NotebookPathReader:
         elapsed = time.time() - start_time
         valid = [p for p, v in result.items() if v["exists"]]
         invalid = [
-            p for p, v in result.items() if not v["exists"] and v["error"] is None
+            p for p, v in result.items()
+            if not v["exists"] and v["error"] is None
         ]
         errors = [p for p, v in result.items() if v["error"]]
         self.logger.info(
             f"Validation complete: {len(valid)} valid, {len(invalid)} invalid, "
-            f"{len(errors)} errors. API calls: {api_calls}. Time: {elapsed:.2f}s"
+            f"{len(errors)} errors. API calls: {api_calls}. "
+            f"Time: {elapsed:.2f}s"
         )
         return result
 
@@ -176,3 +179,65 @@ class NotebookPathReader:
         if not p.startswith("/"):
             p = "/" + p
         return p
+
+
+class DatabricksSecretProvider:
+    """
+    Utility class to retrieve Databricks secrets (e.g., tokens) from secret scopes.
+    Falls back to environment variables if dbutils is not available.
+    """
+    def __init__(self, scope: str = "DEFAULT", token_key: str = "DATABRICKS_TOKEN", url_key: str = "DATABRICKS_HOST", logger: Optional[logging.Logger] = None):
+        self.scope = scope
+        self.token_key = token_key
+        self.url_key = url_key
+        self.logger = logger or logging.getLogger(self.__class__.__name__)
+
+    def get_token(self) -> str:
+        try:
+            import dbutils  # type: ignore
+            token = dbutils.secrets.get(
+                scope=self.scope, key=self.token_key
+            )
+            self.logger.info(
+                "Retrieved Databricks token from secret scope."
+            )
+            return token
+        except Exception as e:
+            self.logger.warning(
+                f"dbutils.secrets.get failed: {e}. "
+                f"Falling back to environment variable."
+            )
+            token = os.environ.get(self.token_key)
+            if not token:
+                raise RuntimeError(
+                    f"Databricks token not found in secret scope or "
+                    f"environment variable '{self.token_key}'"
+                )
+            return token
+
+    def get_host(self) -> str:
+        try:
+            import dbutils  # type: ignore
+            host = dbutils.secrets.get(
+                scope=self.scope, key=self.url_key
+            )
+            self.logger.info(
+                "Retrieved Databricks host from secret scope."
+            )
+            return host
+        except Exception as e:
+            self.logger.warning(
+                f"dbutils.secrets.get failed: {e}. "
+                f"Falling back to environment variable."
+            )
+            host = os.environ.get(self.url_key)
+            if not host:
+                raise RuntimeError(
+                    f"Databricks host not found in secret scope or "
+                    f"environment variable '{self.url_key}'"
+                )
+            return host
+
+# Placeholder for DatabricksNotebookClient integration
+# from notebook_api import DatabricksNotebookClient
+# client = DatabricksNotebookClient(auth_provider=DatabricksSecretProvider())
