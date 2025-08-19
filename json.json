@@ -1,0 +1,601 @@
+{
+    "entities": [
+      {
+        "id": "var:PRM_FECHA_RUTINA",
+        "type": "variable",
+        "name": "PRM_FECHA_RUTINA"
+      },
+      {
+        "id": "var:LHCL_AMBIENTE",
+        "type": "variable",
+        "name": "LHCL_AMBIENTE"
+      },
+      {
+        "id": "var:LHCL_COD_AMBIENTE",
+        "type": "variable",
+        "name": "LHCL_COD_AMBIENTE"
+      },
+      {
+        "id": "var:STORAGELOCATION_RDV_DE",
+        "type": "variable",
+        "name": "STORAGELOCATION_RDV_DE"
+      },
+      {
+        "id": "var:STORAGELOCATION_UDV",
+        "type": "variable",
+        "name": "STORAGELOCATION_UDV"
+      },
+      {
+        "id": "var:STORAGELOCATION_DDV_CPYBCANEG_CPYBCANEG_BASESGENERALES",
+        "type": "variable",
+        "name": "STORAGELOCATION_DDV_CPYBCANEG_CPYBCANEG_BASESGENERALES"
+      },
+      {
+        "id": "var:STORAGELOCATION_DDV_CPYBCANEG_SALDOS",
+        "type": "variable",
+        "name": "STORAGELOCATION_DDV_CPYBCANEG_SALDOS"
+      },
+      {
+        "id": "var:STORAGELOCATION_RDV_DE_SEGMENTACIONPRODUCTOBDN",
+        "type": "variable",
+        "name": "STORAGELOCATION_RDV_DE_SEGMENTACIONPRODUCTOBDN"
+      },
+      {
+        "id": "var:STORAGELOCATION_UDV_M_CLIENTE",
+        "type": "variable",
+        "name": "STORAGELOCATION_UDV_M_CLIENTE"
+      },
+      {
+        "id": "var:STORAGELOCATION_UDV_M_CUENTAFINANCIERA",
+        "type": "variable",
+        "name": "STORAGELOCATION_UDV_M_CUENTAFINANCIERA"
+      },
+      {
+        "id": "var:STORAGELOCATION_DDV_UD_PORTAFOLIOCLIENTECARTERIZADOBDN",
+        "type": "variable",
+        "name": "STORAGELOCATION_DDV_UD_PORTAFOLIOCLIENTECARTERIZADOBDN"
+      },
+      {
+        "id": "var:STORAGELOCATION_UDV_H_TIPOCAMBIO",
+        "type": "variable",
+        "name": "STORAGELOCATION_UDV_H_TIPOCAMBIO"
+      },
+      {
+        "id": "var:STORAGELOCATION_UDV_H_SALDOCONTABLE",
+        "type": "variable",
+        "name": "STORAGELOCATION_UDV_H_SALDOCONTABLE"
+      },
+      {
+        "id": "var:STORAGELOCATION_UDV_H_SALDOCUENTALEASING",
+        "type": "variable",
+        "name": "STORAGELOCATION_UDV_H_SALDOCUENTALEASING"
+      },
+      {
+        "id": "var:STORAGELOCATION_UDV_H_SALDOCUENTACORRIENTE",
+        "type": "variable",
+        "name": "STORAGELOCATION_UDV_H_SALDOCUENTACORRIENTE"
+      },
+      {
+        "id": "var:STORAGELOCATION_UDV_H_SALDOCUENTACREDITOPERSONAL",
+        "type": "variable",
+        "name": "STORAGELOCATION_UDV_H_SALDOCUENTACREDITOPERSONAL"
+      },
+      {
+        "id": "var:STORAGELOCATION_UDV_H_SALDOCUENTAFACTORING",
+        "type": "variable",
+        "name": "STORAGELOCATION_UDV_H_SALDOCUENTAFACTORING"
+      },
+      {
+        "id": "var:STORAGELOCATION_DDV_HD_SEGUIMIENTOSALDOCLIENTECARTERIZADOBDN",
+        "type": "variable",
+        "name": "STORAGELOCATION_DDV_HD_SEGUIMIENTOSALDOCLIENTECARTERIZADOBDN"
+      },
+      {
+        "id": "var:COLUMNS_M_CLIENTE",
+        "type": "variable",
+        "name": "COLUMNS_M_CLIENTE"
+      },
+      {
+        "id": "var:COLUMNS_M_CUENTAFINANCIERA",
+        "type": "variable",
+        "name": "COLUMNS_M_CUENTAFINANCIERA"
+      },
+      {
+        "id": "var:COLUMNS_H_TIPOCAMBIO",
+        "type": "variable",
+        "name": "COLUMNS_H_TIPOCAMBIO"
+      },
+      {
+        "id": "var:COLUMNS_H_SALDOCONTABLE",
+        "type": "variable",
+        "name": "COLUMNS_H_SALDOCONTABLE"
+      },
+      {
+        "id": "var:COLUMNS_H_SALDOCUENTALEASING",
+        "type": "variable",
+        "name": "COLUMNS_H_SALDOCUENTALEASING"
+      },
+      {
+        "id": "var:COLUMNS_H_SALDOCUENTACORRIENTE",
+        "type": "variable",
+        "name": "COLUMNS_H_SALDOCUENTACORRIENTE"
+      },
+      {
+        "id": "var:COLUMNS_H_SALDOCUENTACREDITOPERSONAL",
+        "type": "variable",
+        "name": "COLUMNS_H_SALDOCUENTACREDITOPERSONAL"
+      },
+      {
+        "id": "var:COLUMNS_H_SALDOCUENTAFACTORING",
+        "type": "variable",
+        "name": "COLUMNS_H_SALDOCUENTAFACTORING"
+      },
+      {
+        "id": "var:df",
+        "type": "variable",
+        "name": "df"
+      },
+      {
+        "id": "path:${STORAGELOCATION_DDV_CPYBCANEG_CPYBCANEG_BASESGENERALES}/UD_PORTAFOLIOCLIENTECARTERIZADOBDN",
+        "type": "path",
+        "name": "${STORAGELOCATION_DDV_CPYBCANEG_CPYBCANEG_BASESGENERALES}/UD_PORTAFOLIOCLIENTECARTERIZADOBDN"
+      },
+      {
+        "id": "var:cliente_df",
+        "type": "variable",
+        "name": "cliente_df"
+      },
+      {
+        "id": "path:${STORAGELOCATION_RDV_DE}/DE_SEGMENTACIONPRODUCTOBDN",
+        "type": "path",
+        "name": "${STORAGELOCATION_RDV_DE}/DE_SEGMENTACIONPRODUCTOBDN"
+      },
+      {
+        "id": "var:producto_de_df",
+        "type": "variable",
+        "name": "producto_de_df"
+      },
+      {
+        "id": "path:${STORAGELOCATION_UDV}/M_CUENTAFINANCIERA",
+        "type": "path",
+        "name": "${STORAGELOCATION_UDV}/M_CUENTAFINANCIERA"
+      },
+      {
+        "id": "var:m_cuentafinanciera_df",
+        "type": "variable",
+        "name": "m_cuentafinanciera_df"
+      },
+      {
+        "id": "var:cliente_cta_financiera_df",
+        "type": "variable",
+        "name": "cliente_cta_financiera_df"
+      },
+      {
+        "id": "path:${STORAGELOCATION_UDV}/H_TIPOCAMBIO",
+        "type": "path",
+        "name": "${STORAGELOCATION_UDV}/H_TIPOCAMBIO"
+      },
+      {
+        "id": "var:h_tipocambio_df",
+        "type": "variable",
+        "name": "h_tipocambio_df"
+      },
+      {
+        "id": "path:${STORAGELOCATION_UDV}/H_SALDOCONTABLE",
+        "type": "path",
+        "name": "${STORAGELOCATION_UDV}/H_SALDOCONTABLE"
+      },
+      {
+        "id": "var:h_saldocontable_df",
+        "type": "variable",
+        "name": "h_saldocontable_df"
+      },
+      {
+        "id": "var:h_saldocontable_V2_df",
+        "type": "variable",
+        "name": "h_saldocontable_V2_df"
+      },
+      {
+        "id": "path:${STORAGELOCATION_UDV}/H_SALDOCUENTALEASING",
+        "type": "path",
+        "name": "${STORAGELOCATION_UDV}/H_SALDOCUENTALEASING"
+      },
+      {
+        "id": "var:h_saldocuentaleasing_df",
+        "type": "variable",
+        "name": "h_saldocuentaleasing_df"
+      },
+      {
+        "id": "path:${STORAGELOCATION_UDV}/H_SALDOCUENTACORRIENTE",
+        "type": "path",
+        "name": "${STORAGELOCATION_UDV}/H_SALDOCUENTACORRIENTE"
+      },
+      {
+        "id": "var:h_saldocuentacorriente_df",
+        "type": "variable",
+        "name": "h_saldocuentacorriente_df"
+      },
+      {
+        "id": "path:${STORAGELOCATION_UDV}/H_SALDOCUENTACREDITOPERSONAL",
+        "type": "path",
+        "name": "${STORAGELOCATION_UDV}/H_SALDOCUENTACREDITOPERSONAL"
+      },
+      {
+        "id": "var:h_saldocuentacreditopersonal_df",
+        "type": "variable",
+        "name": "h_saldocuentacreditopersonal_df"
+      },
+      {
+        "id": "path:${STORAGELOCATION_UDV}/H_SALDOCUENTAFACTORING",
+        "type": "path",
+        "name": "${STORAGELOCATION_UDV}/H_SALDOCUENTAFACTORING"
+      },
+      {
+        "id": "var:h_saldocuentafactoring_df",
+        "type": "variable",
+        "name": "h_saldocuentafactoring_df"
+      },
+      {
+        "id": "var:pre_univ_contable_V2_df",
+        "type": "variable",
+        "name": "pre_univ_contable_V2_df"
+      },
+      {
+        "id": "var:univ_contable_V2_df",
+        "type": "variable",
+        "name": "univ_contable_V2_df"
+      },
+      {
+        "id": "var:univ_contable_V2_sum_df",
+        "type": "variable",
+        "name": "univ_contable_V2_sum_df"
+      },
+      {
+        "id": "var:pre_univ_contable_df",
+        "type": "variable",
+        "name": "pre_univ_contable_df"
+      },
+      {
+        "id": "var:univ_contable_df",
+        "type": "variable",
+        "name": "univ_contable_df"
+      },
+      {
+        "id": "var:univ_contable_sum_df",
+        "type": "variable",
+        "name": "univ_contable_sum_df"
+      },
+      {
+        "id": "var:pre_univ_leasing_df",
+        "type": "variable",
+        "name": "pre_univ_leasing_df"
+      },
+      {
+        "id": "var:univ_leasing_df",
+        "type": "variable",
+        "name": "univ_leasing_df"
+      },
+      {
+        "id": "var:univ_leasing_sum_df",
+        "type": "variable",
+        "name": "univ_leasing_sum_df"
+      },
+      {
+        "id": "var:pre_univ_corriente_df",
+        "type": "variable",
+        "name": "pre_univ_corriente_df"
+      },
+      {
+        "id": "var:univ_corriente_df",
+        "type": "variable",
+        "name": "univ_corriente_df"
+      },
+      {
+        "id": "var:univ_corriente_sum_df",
+        "type": "variable",
+        "name": "univ_corriente_sum_df"
+      },
+      {
+        "id": "var:pre_univ_credito_personal_df",
+        "type": "variable",
+        "name": "pre_univ_credito_personal_df"
+      },
+      {
+        "id": "var:univ_credito_personal_df",
+        "type": "variable",
+        "name": "univ_credito_personal_df"
+      },
+      {
+        "id": "var:univ_credito_personal_sum_df",
+        "type": "variable",
+        "name": "univ_credito_personal_sum_df"
+      },
+      {
+        "id": "var:pre_univ_factoring_df",
+        "type": "variable",
+        "name": "pre_univ_factoring_df"
+      },
+      {
+        "id": "var:univ_factoring_df",
+        "type": "variable",
+        "name": "univ_factoring_df"
+      },
+      {
+        "id": "var:univ_factoring_sum_df",
+        "type": "variable",
+        "name": "univ_factoring_sum_df"
+      },
+      {
+        "id": "var:dfs",
+        "type": "variable",
+        "name": "dfs"
+      },
+      {
+        "id": "var:union_dfs",
+        "type": "variable",
+        "name": "union_dfs"
+      },
+      {
+        "id": "var:pre_final_df",
+        "type": "variable",
+        "name": "pre_final_df"
+      },
+      {
+        "id": "var:final_df",
+        "type": "variable",
+        "name": "final_df"
+      }
+    ],
+    "relationships": [
+      {
+        "src": "path:${STORAGELOCATION_DDV_CPYBCANEG_CPYBCANEG_BASESGENERALES}/UD_PORTAFOLIOCLIENTECARTERIZADOBDN",
+        "dst": "var:cliente_df",
+        "type": "reads_from"
+      },
+      {
+        "src": "path:${STORAGELOCATION_RDV_DE}/DE_SEGMENTACIONPRODUCTOBDN",
+        "dst": "var:producto_de_df",
+        "type": "reads_from"
+      },
+      {
+        "src": "path:${STORAGELOCATION_UDV}/M_CUENTAFINANCIERA",
+        "dst": "var:m_cuentafinanciera_df",
+        "type": "reads_from"
+      },
+      {
+        "src": "var:cliente_df",
+        "dst": "var:cliente_cta_financiera_df",
+        "type": "derives_from"
+      },
+      {
+        "src": "var:m_cuentafinanciera_df",
+        "dst": "var:cliente_cta_financiera_df",
+        "type": "derives_from"
+      },
+      {
+        "src": "path:${STORAGELOCATION_UDV}/H_TIPOCAMBIO",
+        "dst": "var:h_tipocambio_df",
+        "type": "reads_from"
+      },
+      {
+        "src": "path:${STORAGELOCATION_UDV}/H_SALDOCONTABLE",
+        "dst": "var:h_saldocontable_df",
+        "type": "reads_from"
+      },
+      {
+        "src": "path:${STORAGELOCATION_UDV}/H_SALDOCONTABLE",
+        "dst": "var:h_saldocontable_V2_df",
+        "type": "reads_from"
+      },
+      {
+        "src": "path:${STORAGELOCATION_UDV}/H_SALDOCUENTALEASING",
+        "dst": "var:h_saldocuentaleasing_df",
+        "type": "reads_from"
+      },
+      {
+        "src": "path:${STORAGELOCATION_UDV}/H_SALDOCUENTACORRIENTE",
+        "dst": "var:h_saldocuentacorriente_df",
+        "type": "reads_from"
+      },
+      {
+        "src": "path:${STORAGELOCATION_UDV}/H_SALDOCUENTACREDITOPERSONAL",
+        "dst": "var:h_saldocuentacreditopersonal_df",
+        "type": "reads_from"
+      },
+      {
+        "src": "path:${STORAGELOCATION_UDV}/H_SALDOCUENTAFACTORING",
+        "dst": "var:h_saldocuentafactoring_df",
+        "type": "reads_from"
+      },
+      {
+        "src": "var:cliente_df",
+        "dst": "var:pre_univ_contable_V2_df",
+        "type": "derives_from"
+      },
+      {
+        "src": "var:h_saldocontable_V2_df",
+        "dst": "var:pre_univ_contable_V2_df",
+        "type": "derives_from"
+      },
+      {
+        "src": "var:pre_univ_contable_V2_df",
+        "dst": "var:univ_contable_V2_df",
+        "type": "derives_from"
+      },
+      {
+        "src": "var:h_tipocambio_df",
+        "dst": "var:univ_contable_V2_df",
+        "type": "derives_from"
+      },
+      {
+        "src": "var:univ_contable_V2_df",
+        "dst": "var:univ_contable_V2_sum_df",
+        "type": "derives_from"
+      },
+      {
+        "src": "var:cliente_df",
+        "dst": "var:pre_univ_contable_df",
+        "type": "derives_from"
+      },
+      {
+        "src": "var:h_saldocontable_df",
+        "dst": "var:pre_univ_contable_df",
+        "type": "derives_from"
+      },
+      {
+        "src": "var:h_tipocambio_df",
+        "dst": "var:univ_contable_df",
+        "type": "derives_from"
+      },
+      {
+        "src": "var:pre_univ_contable_df",
+        "dst": "var:univ_contable_df",
+        "type": "derives_from"
+      },
+      {
+        "src": "var:univ_contable_df",
+        "dst": "var:univ_contable_sum_df",
+        "type": "derives_from"
+      },
+      {
+        "src": "var:h_saldocuentaleasing_df",
+        "dst": "var:pre_univ_leasing_df",
+        "type": "derives_from"
+      },
+      {
+        "src": "var:cliente_cta_financiera_df",
+        "dst": "var:pre_univ_leasing_df",
+        "type": "derives_from"
+      },
+      {
+        "src": "var:pre_univ_leasing_df",
+        "dst": "var:univ_leasing_df",
+        "type": "derives_from"
+      },
+      {
+        "src": "var:h_tipocambio_df",
+        "dst": "var:univ_leasing_df",
+        "type": "derives_from"
+      },
+      {
+        "src": "var:univ_leasing_df",
+        "dst": "var:univ_leasing_sum_df",
+        "type": "derives_from"
+      },
+      {
+        "src": "var:h_saldocuentacorriente_df",
+        "dst": "var:pre_univ_corriente_df",
+        "type": "derives_from"
+      },
+      {
+        "src": "var:cliente_cta_financiera_df",
+        "dst": "var:pre_univ_corriente_df",
+        "type": "derives_from"
+      },
+      {
+        "src": "var:h_tipocambio_df",
+        "dst": "var:univ_corriente_df",
+        "type": "derives_from"
+      },
+      {
+        "src": "var:pre_univ_corriente_df",
+        "dst": "var:univ_corriente_df",
+        "type": "derives_from"
+      },
+      {
+        "src": "var:univ_corriente_df",
+        "dst": "var:univ_corriente_sum_df",
+        "type": "derives_from"
+      },
+      {
+        "src": "var:cliente_cta_financiera_df",
+        "dst": "var:pre_univ_credito_personal_df",
+        "type": "derives_from"
+      },
+      {
+        "src": "var:h_saldocuentacreditopersonal_df",
+        "dst": "var:pre_univ_credito_personal_df",
+        "type": "derives_from"
+      },
+      {
+        "src": "var:pre_univ_credito_personal_df",
+        "dst": "var:univ_credito_personal_df",
+        "type": "derives_from"
+      },
+      {
+        "src": "var:h_tipocambio_df",
+        "dst": "var:univ_credito_personal_df",
+        "type": "derives_from"
+      },
+      {
+        "src": "var:univ_credito_personal_df",
+        "dst": "var:univ_credito_personal_sum_df",
+        "type": "derives_from"
+      },
+      {
+        "src": "var:h_saldocuentafactoring_df",
+        "dst": "var:pre_univ_factoring_df",
+        "type": "derives_from"
+      },
+      {
+        "src": "var:cliente_cta_financiera_df",
+        "dst": "var:pre_univ_factoring_df",
+        "type": "derives_from"
+      },
+      {
+        "src": "var:pre_univ_factoring_df",
+        "dst": "var:univ_factoring_df",
+        "type": "derives_from"
+      },
+      {
+        "src": "var:h_tipocambio_df",
+        "dst": "var:univ_factoring_df",
+        "type": "derives_from"
+      },
+      {
+        "src": "var:univ_factoring_df",
+        "dst": "var:univ_factoring_sum_df",
+        "type": "derives_from"
+      },
+      {
+        "src": "var:univ_contable_sum_df",
+        "dst": "var:union_dfs",
+        "type": "derives_from"
+      },
+      {
+        "src": "var:univ_leasing_sum_df",
+        "dst": "var:union_dfs",
+        "type": "derives_from"
+      },
+      {
+        "src": "var:univ_corriente_sum_df",
+        "dst": "var:union_dfs",
+        "type": "derives_from"
+      },
+      {
+        "src": "var:univ_credito_personal_sum_df",
+        "dst": "var:union_dfs",
+        "type": "derives_from"
+      },
+      {
+        "src": "var:univ_factoring_sum_df",
+        "dst": "var:union_dfs",
+        "type": "derives_from"
+      },
+      {
+        "src": "var:union_dfs",
+        "dst": "var:pre_final_df",
+        "type": "derives_from"
+      },
+      {
+        "src": "var:pre_final_df",
+        "dst": "var:final_df",
+        "type": "derives_from"
+      },
+      {
+        "src": "var:producto_de_df",
+        "dst": "var:final_df",
+        "type": "derives_from"
+      }
+    ]
+  }

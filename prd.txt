@@ -1,0 +1,674 @@
+<context>
+# Overview
+
+The Knowledge Graph-Based Data Lineage Solution for Azure Databricks is an intelligent system that automatically extracts, analyzes, and visualizes data lineage across complex data pipelines. It solves the critical challenge of understanding data dependencies, impact analysis, and regulatory compliance in modern data ecosystems.
+
+**Problem Solved**: Data stewards currently face manual, notebook-by-notebook analysis to understand column-level lineage and downstream impacts. This leads to incomplete impact assessments, compliance risks, and delayed decision-making.
+
+**Target Users**: 
+- Data Stewards responsible for data governance and compliance
+- Data Engineers needing to understand pipeline dependencies
+- Data Analysts requiring impact analysis for schema changes
+- Compliance Officers ensuring regulatory adherence
+
+**Value Proposition**:
+- 90% reduction in manual lineage analysis time
+- Complete column-level lineage visibility across all notebooks
+- Automated impact analysis with AI-powered insights
+- Real-time lineage updates as pipelines evolve
+
+# Core Features
+
+## 1. Automated Code Parsing and Extraction
+**What it does**: Automatically parses PySpark DataFrame operations and SQL queries from Databricks notebooks to extract table, column, and transformation metadata.
+
+**Why it's important**: Eliminates manual code review, ensures complete coverage, and captures complex transformation logic that manual analysis often misses.
+
+**How it works**: 
+- Reads notebook paths from pre-generated Excel file
+- Uses SQLGlot for SQL parsing with 97-99% accuracy
+- Leverages Python AST for PySpark DataFrame operation extraction
+- Extracts nodes (tables, columns, functions) and edges (relationships, transformations)
+
+## 2. Knowledge Graph Construction
+**What it does**: Builds a comprehensive knowledge graph representing the entire codebase with proper entity relationships and lineage paths.
+
+**Why it's important**: Provides a queryable, visual representation of data dependencies that can be traversed for impact analysis.
+
+**How it works**:
+- Creates nodes for Projects, Tables, Columns, Transformations
+- Establishes edges for contains, defines, consumes, transforms_into relationships
+- Stores graph in Delta Lake tables optimized for graph queries
+- Maintains versioning for temporal lineage analysis
+
+## 3. Vector Search Integration
+**What it does**: Enables semantic search across the knowledge graph using natural language queries about lineage.
+
+**Why it's important**: Allows users to find relevant lineage information without knowing exact table/column names or writing complex queries.
+
+**How it works**:
+- Generates embeddings for all graph nodes and edges
+- Stores embeddings in Databricks Vector Search indexes
+- Provides similarity search for finding related entities
+- Enables fuzzy matching for approximate queries
+
+## 4. LLM-Powered Lineage Analysis
+**What it does**: Uses AI agents to provide intelligent lineage analysis, impact assessment, and natural language explanations.
+
+**Why it's important**: Transforms raw lineage data into actionable insights that business users can understand.
+
+**How it works**:
+- LangChain/AutoGen agents specialized for lineage tasks
+- RAG pattern combining vector search with LLM reasoning
+- Multi-agent collaboration for comprehensive analysis
+- Natural language interface for querying lineage
+
+## 5. Real-time Lineage Updates
+**What it does**: Continuously monitors and updates lineage as notebooks and pipelines change.
+
+**Why it's important**: Ensures lineage information remains current and accurate as the data landscape evolves.
+
+**How it works**:
+- Monitors Unity Catalog audit logs for changes
+- Streaming processing of lineage events
+- Incremental graph updates without full rebuilds
+- Version tracking for historical lineage analysis
+
+# User Experience
+
+## User Personas
+
+### 1. Sarah - Senior Data Steward
+- **Goal**: Ensure data governance compliance and manage data quality
+- **Pain Points**: Manual lineage tracking, incomplete documentation, time-consuming impact analysis
+- **Needs**: Automated lineage discovery, compliance reporting, impact visualization
+
+### 2. Mike - Data Engineer
+- **Goal**: Understand pipeline dependencies before making changes
+- **Pain Points**: Unknown downstream impacts, complex transformation logic, scattered documentation
+- **Needs**: Quick dependency checking, transformation visualization, change impact preview
+
+### 3. Lisa - Data Analyst
+- **Goal**: Understand data sources and transformations for accurate analysis
+- **Pain Points**: Unclear data provenance, hidden transformations, trust in data accuracy
+- **Needs**: Column-level lineage, transformation transparency, data quality indicators
+
+## Key User Flows
+
+### 1. Impact Analysis Flow
+1. User uploads CSV with affected column paths
+2. System processes each path and extracts relevant code
+3. Knowledge graph is queried for dependencies
+4. LLM analyzes impact across entire pipeline
+5. User receives comprehensive impact report with recommendations
+
+### 2. Lineage Discovery Flow
+1. User enters natural language query (e.g., "What affects customer_revenue column?")
+2. Vector search finds relevant graph nodes
+3. Graph traversal identifies complete lineage path
+4. LLM explains lineage in business terms
+5. Interactive visualization shows lineage diagram
+
+### 3. Compliance Reporting Flow
+1. User selects regulatory framework (GDPR, CCPA, etc.)
+2. System identifies all relevant data flows
+3. Automated report generation with lineage evidence
+4. Export capabilities for audit purposes
+
+## UI/UX Considerations
+
+### Interface Design
+- **Clean Dashboard**: Overview of lineage health, recent changes, and alerts
+- **Interactive Graph Visualization**: D3.js-based lineage graphs with zoom/filter capabilities
+- **Natural Language Query Box**: Prominent search interface for lineage questions
+- **Contextual Help**: Inline documentation and guided tours
+
+### User Experience Principles
+- **Progressive Disclosure**: Show summary first, details on demand
+- **Visual Hierarchy**: Most important lineage paths highlighted
+- **Responsive Design**: Works on desktop and tablet devices
+- **Accessibility**: WCAG 2.1 AA compliance for all interfaces
+
+### Integration Points
+- **Databricks Workspace**: Native integration as workspace application
+- **Slack/Teams**: Notifications and quick queries via chat
+- **API Access**: RESTful API for programmatic access
+- **Export Options**: PDF reports, CSV data, JSON lineage graphs
+</context>
+
+<PRD>
+# Technical Architecture
+
+## System Components
+
+### 1. Core Processing Engine
+```python
+# Architecture Components
+- Notebook Parser Service
+  - Excel file reader for notebook paths
+  - Databricks notebook API integration
+  - Cell extraction and classification
+  
+- Code Analysis Engine
+  - SQLGlot SQL parser (v19.0+)
+  - Python AST parser for PySpark
+  - Custom transformation extractor
+  
+- Knowledge Graph Builder
+  - Node creation service (tables, columns, transformations)
+  - Edge relationship mapper
+  - Graph optimization engine
+```
+
+### 2. Storage Layer
+```python
+# Delta Lake Schema
+- nodes_table:
+  - node_id: STRING (primary key)
+  - entity_type: STRING (table|column|transformation|function)
+  - entity_name: STRING
+  - properties: MAP<STRING, STRING>
+  - embedding: ARRAY<FLOAT>
+  - created_at: TIMESTAMP
+  - updated_at: TIMESTAMP
+  
+- edges_table:
+  - edge_id: STRING (primary key)
+  - source_node_id: STRING
+  - target_node_id: STRING
+  - relationship_type: STRING
+  - properties: MAP<STRING, STRING>
+  - created_at: TIMESTAMP
+```
+
+### 3. Vector Search Infrastructure
+```python
+# Vector Search Configuration
+- Storage-optimized endpoint: kg_lineage_endpoint
+- Node embeddings index: 768-dimensional
+- Edge embeddings index: 384-dimensional
+- Hybrid search: keyword + semantic
+```
+
+### 4. Agent Framework Architecture
+```python
+# Multi-Agent System
+- Lineage Discovery Agent (LangChain)
+- Impact Analysis Agent (AutoGen)
+- Code Parser Agent (Custom)
+- Query Orchestrator (CrewAI)
+```
+
+## Data Models
+
+### Entity Relationship Model
+```
+Project (1) --> (*) Module
+Module (1) --> (*) Notebook
+Notebook (1) --> (*) CodeCell
+CodeCell (1) --> (*) Operation
+Operation (*) --> (*) Table (via reads/writes)
+Table (1) --> (*) Column
+Column (*) --> (*) Column (via transformations)
+```
+
+### Graph Schema
+```json
+{
+  "nodes": {
+    "table_node": {
+      "id": "catalog.schema.table",
+      "type": "table",
+      "properties": {
+        "catalog": "string",
+        "schema": "string", 
+        "table_name": "string",
+        "description": "string"
+      }
+    },
+    "column_node": {
+      "id": "catalog.schema.table.column",
+      "type": "column",
+      "properties": {
+        "data_type": "string",
+        "is_nullable": "boolean",
+        "description": "string"
+      }
+    }
+  },
+  "edges": {
+    "transformation_edge": {
+      "source": "node_id",
+      "target": "node_id",
+      "type": "transforms_into",
+      "properties": {
+        "operation": "string",
+        "expression": "string"
+      }
+    }
+  }
+}
+```
+
+## APIs and Integrations
+
+### Internal APIs
+```python
+# Lineage Query API
+POST /api/v1/lineage/query
+{
+  "entity": "catalog.schema.table.column",
+  "direction": "upstream|downstream|both",
+  "depth": 5,
+  "include_transformations": true
+}
+
+# Impact Analysis API  
+POST /api/v1/impact/analyze
+{
+  "affected_entities": ["entity1", "entity2"],
+  "analysis_type": "schema_change|data_quality|deletion",
+  "include_recommendations": true
+}
+
+# Graph Update API
+POST /api/v1/graph/update
+{
+  "notebook_paths": ["path1", "path2"],
+  "incremental": true,
+  "version": "v1.2.3"
+}
+```
+
+### External Integrations
+- **Unity Catalog**: Lineage system tables, audit logs
+- **MLflow**: Model tracking, experiment logging
+- **Databricks SDK**: Workspace operations, job scheduling
+- **Azure Key Vault**: Secret management
+- **Azure Monitor**: Logging and alerting
+
+## Infrastructure Requirements
+
+### Compute Requirements
+```yaml
+# Parsing Cluster
+- Node Type: Standard_DS4_v2 (8 cores, 28GB RAM)
+- Min Nodes: 2
+- Max Nodes: 10
+- Spark Version: 13.3 LTS
+- Libraries:
+  - sqlglot==19.0.0
+  - ast
+  - databricks-sdk==0.18.0
+
+# Vector Search Cluster  
+- Endpoint Type: Storage-Optimized
+- Index Size: Up to 10M embeddings
+- Query QPS: 1000
+
+# Agent Serving
+- Model Serving Endpoint: GPU-enabled
+- Concurrent Requests: 50
+- Response Time SLA: <2 seconds
+```
+
+### Storage Requirements
+```yaml
+# Delta Lake Storage
+- nodes_table: ~10GB (1M nodes)
+- edges_table: ~50GB (10M relationships)
+- lineage_history: ~100GB (1 year retention)
+- vector_indexes: ~20GB
+
+# Total Storage: ~200GB with growth factor 2x/year
+```
+
+# Development Roadmap
+
+## Phase 1: Foundation (MVP)
+
+### 1.1 Core Infrastructure Setup
+- Set up Delta Lake tables for nodes and edges
+- Configure Unity Catalog permissions
+- Create Databricks Vector Search endpoint
+- Implement basic logging and monitoring
+
+### 1.2 Basic Code Parsing
+- Excel file reader for notebook paths
+- Simple SQL parser using SQLGlot
+- Basic PySpark operation detector
+- Manual node/edge creation from parsed code
+
+### 1.3 Simple Knowledge Graph
+- Delta table storage for graph entities
+- Basic CRUD operations for nodes/edges
+- Simple relationship mapping (table → column)
+- Manual graph queries using Spark SQL
+
+### 1.4 Basic Query Interface
+- REST API for lineage queries
+- Simple upstream/downstream traversal
+- JSON response format
+- Basic error handling
+
+### 1.5 Minimal UI
+- Simple web interface using Databricks Apps
+- Table/column search functionality
+- Basic lineage visualization (parent-child view)
+- Export to CSV capability
+
+**MVP Deliverable**: Working system that can parse notebooks, build basic lineage graph, and answer simple lineage queries via API
+
+## Phase 2: Intelligence Layer
+
+### 2.1 Advanced Parsing
+- Complex SQL parsing (CTEs, subqueries, joins)
+- PySpark DataFrame operation chain tracking
+- Transformation expression extraction
+- Column-level dependency mapping
+
+### 2.2 Vector Search Integration
+- Embedding generation for all entities
+- Vector index creation and optimization
+- Semantic search implementation
+- Similarity-based entity matching
+
+### 2.3 LLM Agent Implementation
+- LangChain agent setup with Databricks LLM
+- RAG pattern implementation
+- Context window optimization
+- Prompt engineering for lineage tasks
+
+### 2.4 Enhanced Graph Features
+- Multi-hop traversal algorithms
+- Cycle detection in lineage
+- Impact scoring algorithms
+- Graph optimization (partitioning, indexing)
+
+### 2.5 Improved User Interface
+- Interactive graph visualization (D3.js)
+- Natural language query box
+- Real-time search suggestions
+- Lineage path highlighting
+
+## Phase 3: Production Features
+
+### 3.1 Multi-Agent System
+- Specialized agents (discovery, impact, code analysis)
+- Agent orchestration with CrewAI
+- Collaborative analysis workflows
+- Agent performance optimization
+
+### 3.2 Real-time Updates
+- Unity Catalog audit log streaming
+- Incremental graph updates
+- Change detection algorithms
+- Version control for lineage
+
+### 3.3 Advanced Analytics
+- Impact prediction models
+- Anomaly detection in lineage
+- Data quality scoring
+- Compliance risk assessment
+
+### 3.4 Enterprise Integration
+- Slack/Teams notifications
+- JIRA integration for impact tickets
+- Tableau/PowerBI connectors
+- SSO and RBAC implementation
+
+### 3.5 Monitoring & Observability
+- Comprehensive MLflow tracking
+- Custom evaluation metrics
+- Performance dashboards
+- Automated alerting
+
+## Phase 4: Advanced Capabilities
+
+### 4.1 Automated Discovery
+- Workspace-wide notebook crawler
+- GitHub repository integration
+- Wheel package analysis
+- External data source detection
+
+### 4.2 Advanced AI Features
+- Fine-tuned models for lineage tasks
+- Automated documentation generation
+- Intelligent recommendations
+- Predictive impact analysis
+
+### 4.3 Governance Features
+- Compliance report automation
+- Data classification integration
+- Retention policy enforcement
+- Audit trail visualization
+
+### 4.4 Performance Optimization
+- Graph query optimization
+- Caching strategies
+- Distributed processing
+- Auto-scaling implementation
+
+# Logical Dependency Chain
+
+## Foundation Layer (Must Build First)
+1. **Delta Lake Table Setup** → Required for all data storage
+2. **Basic Notebook Parser** → Needed to read code content
+3. **Simple Node/Edge Model** → Foundation for graph structure
+
+## Core Processing (Build Second)
+4. **SQL Parser Integration** → Depends on notebook parser
+5. **Graph Builder Service** → Depends on node/edge model
+6. **Basic API Layer** → Depends on graph builder
+
+## Query Capabilities (Build Third)
+7. **Graph Traversal Logic** → Depends on graph storage
+8. **Simple Web UI** → Depends on API layer
+9. **Basic Lineage Visualization** → Depends on traversal logic
+
+## Intelligence Layer (Build Fourth)
+10. **Embedding Generation** → Depends on graph entities
+11. **Vector Search Setup** → Depends on embeddings
+12. **LLM Integration** → Depends on vector search
+
+## Advanced Features (Build Fifth)
+13. **Multi-Agent System** → Depends on LLM integration
+14. **Real-time Updates** → Depends on stable graph model
+15. **Impact Analysis** → Depends on multi-agent system
+
+## Production Hardening (Build Last)
+16. **Monitoring/Alerting** → Depends on all core features
+17. **Performance Optimization** → Depends on usage patterns
+18. **Enterprise Integration** → Depends on stable APIs
+
+# Risks and Mitigations
+
+## Technical Risks
+
+### 1. Code Parsing Accuracy
+**Risk**: SQLGlot/AST may not parse all code variations correctly
+**Mitigation**: 
+- Implement fallback parsers
+- Manual override capabilities
+- Continuous parser improvement based on failures
+- Maintain parsing accuracy metrics
+
+### 2. Graph Scale Performance
+**Risk**: Performance degradation with millions of nodes/edges
+**Mitigation**:
+- Implement graph partitioning strategies
+- Use storage-optimized vector search
+- Incremental update patterns
+- Query result caching
+
+### 3. LLM Hallucination
+**Risk**: AI agents providing incorrect lineage information
+**Mitigation**:
+- Implement fact-checking against graph data
+- Confidence scoring for AI responses
+- Human-in-the-loop validation for critical paths
+- Comprehensive evaluation metrics
+
+## Implementation Risks
+
+### 1. MVP Scope Creep
+**Risk**: Attempting too many features in initial release
+**Mitigation**:
+- Strict MVP definition (Phase 1 only)
+- Regular stakeholder alignment
+- Feature flag implementation
+- Iterative release strategy
+
+### 2. Integration Complexity
+**Risk**: Difficulty integrating with existing Databricks infrastructure
+**Mitigation**:
+- Use native Databricks features where possible
+- Phased integration approach
+- Comprehensive testing environment
+- Rollback procedures
+
+### 3. User Adoption
+**Risk**: Users continue manual processes
+**Mitigation**:
+- User training programs
+- Clear value demonstration
+- Gradual migration strategy
+- Success metrics tracking
+
+## Resource Risks
+
+### 1. Compute Costs
+**Risk**: High costs for vector search and LLM operations
+**Mitigation**:
+- Implement usage quotas
+- Query result caching
+- Scheduled batch processing
+- Cost monitoring dashboards
+
+### 2. Development Complexity
+**Risk**: Specialized skills needed for graph/AI development
+**Mitigation**:
+- Leverage Databricks professional services
+- Partner with specialized vendors
+- Comprehensive documentation
+- Knowledge transfer sessions
+
+# Appendix
+
+## Research Findings
+
+### Performance Benchmarks
+- SQLGlot parsing: 97-99% accuracy on Spark SQL
+- Vector search: <100ms query time for 10M embeddings
+- LLM response: <2s for lineage queries with context
+- Graph traversal: <500ms for 5-hop queries
+
+### Technology Evaluations
+```
+Parser Comparison:
+- SQLGlot: Best for SQL, active development
+- sqlparse: Limited Spark SQL support
+- Custom regex: High maintenance, low accuracy
+
+Agent Framework Comparison:
+- LangChain: Best Databricks integration
+- AutoGen: Superior multi-agent coordination
+- CrewAI: Best for complex workflows
+```
+
+### Data Volume Estimates
+```
+Based on typical enterprise usage:
+- 10,000 notebooks
+- 50,000 tables
+- 500,000 columns  
+- 2M transformation operations
+- 10M relationships
+```
+
+## Technical Specifications
+
+### API Specifications
+```yaml
+openapi: 3.0.0
+info:
+  title: Lineage Analysis API
+  version: 1.0.0
+paths:
+  /lineage/{entity_id}:
+    get:
+      parameters:
+        - name: entity_id
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: direction
+          in: query
+          schema:
+            type: string
+            enum: [upstream, downstream, both]
+        - name: depth
+          in: query
+          schema:
+            type: integer
+            default: 5
+      responses:
+        200:
+          description: Lineage graph
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LineageGraph'
+```
+
+### Graph Query Examples
+```sql
+-- Find all downstream tables affected by source table
+WITH RECURSIVE downstream AS (
+  SELECT target_node_id as node_id, 1 as depth
+  FROM edges 
+  WHERE source_node_id = 'catalog.schema.source_table'
+    AND relationship_type = 'transforms_into'
+  
+  UNION ALL
+  
+  SELECT e.target_node_id, d.depth + 1
+  FROM edges e
+  JOIN downstream d ON e.source_node_id = d.node_id
+  WHERE d.depth < 5
+)
+SELECT DISTINCT n.*, d.depth
+FROM downstream d
+JOIN nodes n ON d.node_id = n.node_id
+WHERE n.entity_type = 'table'
+ORDER BY d.depth;
+```
+
+### MLflow Tracking Schema
+```python
+# Metrics to track
+metrics = {
+    "parsing_accuracy": float,
+    "graph_build_time": float,
+    "query_response_time": float,
+    "agent_confidence_score": float,
+    "user_satisfaction_rating": float
+}
+
+# Parameters to log
+params = {
+    "parser_version": str,
+    "graph_size": int,
+    "llm_model": str,
+    "vector_index_size": int
+}
+
+# Artifacts to store
+artifacts = {
+    "lineage_graph": "graph.json",
+    "parsing_errors": "errors.log",
+    "agent_traces": "traces.json"
+}
+```
+</PRD>
